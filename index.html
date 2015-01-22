@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ToDo</title>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+</head>
+
+<body>
+<div class="content">
+    <form action="#" method="post">
+        <ul>
+            <li class="submit-button"><input type="submit" name="submit" value="Add task"/></li>
+            <li class="new-task"><input type="text" ng-model="yourName"/></li>
+        </ul>
+    </form>
+
+    <ul class="control">
+        <li>
+            <h3>Number of tasks</h3>
+            <span>0</span>///<span id="done-tasks">0</span>
+        </li>
+        <li>
+            <h3>Delete</h3>
+            <ul>
+                <li>Delete all tasks</li>
+                <li>Delete done tasks</li>
+            </ul>
+        </li>
+        <li>
+            <h3>Filter</h3>
+            <ul>
+                <li class="active">All tasks</li>
+                <li>Done tasks</li>
+                <li>Not done tasks</li>
+            </ul>
+        </li>
+        <li>
+            <h3>Saving all tasks on server</h3>
+            <span class="save">Save</span>
+        </li>
+    </ul>
+
+    <ul class="task-list">
+        <li><a class="check" href="#">Check all tasks</a><h2>Your tasks</h2></li>
+        <li>{{yourName}}</li>
+    </ul>
+</div>
+<script type="text/javascript" src="js/main1.js"></script>
+</body>
+</html>
