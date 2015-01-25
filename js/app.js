@@ -7,37 +7,25 @@
         .controller('MainController', function($scope, $http) {
             $scope.todoList = [];
             $scope.checkAllState = "Check all tasks";
-
-            function doneTaskCount() {
-                var count = 0;
-                angular.forEach($scope.todoList, function(task) {
-                    if (task.check) {count++}
-                });
-                $scope.doneTasks = count;
-            }
-
-            doneTaskCount();
-
-            function checkAllTest() {
-                if ($scope.todoList.length == $scope.doneTasks) {
-                    $scope.checkAllState = "UnCheck all tasks";
-                }
-                else {
-                    $scope.checkAllState = "Check all tasks";
-                }
-            }
+            $scope.showAll = 'active';
 
             $http.get('http://localhost:1337/todo-angular'). // Houston, we have a problem
                 success(function(result) {
                     $scope.todoList = result.data || [];
+                    angular.forEach($scope.todoList, function(task) {
+                        task.visibility = true;
+                    });
                 }).
                 error(function() {
                     console.log('server error, get');
                 });
 
+            doneTaskCount();
+
             $scope.addTask = function() {
-                $scope.todoList.push({task:$scope.newTask, check:""});
+                $scope.todoList.push({task: $scope.newTask, check: "", visibility: true});
                 $scope.newTask = "";
+
             };
 
             $scope.checkTask = function(el) {
@@ -89,6 +77,57 @@
                 }
             };
 
+            $scope.deleteAll = function() {
+                if ($scope.todoList.length != 0) {
+                    $scope.todoList = [];
+                }
+                else {
+                    alert('You should enter your tasks first!');
+                }
+            };
+            $scope.deleteDone = function() {
+                angular.forEach($scope.todoList, function(task) {
+                    if (task.check) {
+                        var idx = $scope.todoList.indexOf(task);
+                        $scope.todoList.splice(idx, 1);
+                    }
+                });
+            };
+
+            $scope.allActive = function() {
+                angular.forEach($scope.todoList, function(task) {
+                    task.visibility = true;
+                });
+                $scope.showAll = 'active';
+                $scope.showDone = '';
+                $scope.showNotDone = '';
+            };
+            $scope.doneActive = function() {
+                angular.forEach($scope.todoList, function(task) {
+                    if (task.check) {
+                        task.visibility = true;
+                    }
+                    else {
+                        task.visibility = false;
+                    }
+                });
+                $scope.showAll = '';
+                $scope.showDone = 'active';
+                $scope.showNotDone = '';
+            };
+            $scope.notDoneActive = function() {
+                angular.forEach($scope.todoList, function(task) {
+                    if (task.check) {
+                        task.visibility = false;
+                    }
+                    else {
+                        task.visibility = true;
+                    }
+                });
+                $scope.showAll = '';
+                $scope.showDone = '';
+                $scope.showNotDone = 'active';
+            };
 
             $scope.saveTasks = function() { // Houston, we have a problem
                 $http.post('http://localhost:1337/todo-angular', $scope.todoList).
@@ -98,7 +137,23 @@
                     error(function() {
                         console.log('server error, post');
                     });
+            };
+
+        //    Functions
+            function doneTaskCount() {
+                $scope.doneTasks = 0;
+                angular.forEach($scope.todoList, function(task) {
+                    if (task.check) {$scope.doneTasks++}
+                });
             }
 
+            function checkAllTest() {
+                if ($scope.todoList.length == $scope.doneTasks) {
+                    $scope.checkAllState = "UnCheck all tasks";
+                }
+                else {
+                    $scope.checkAllState = "Check all tasks";
+                }
+            }
         })
 })();

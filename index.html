@@ -26,21 +26,21 @@
             <h3>Check all</h3>
             <span ng-click="checkAll()">{{checkAllState}}</span>
         </li>
-       <!-- <li>
+        <li>
             <h3>Delete</h3>
             <ul>
-                <li>Delete all tasks</li>
-                <li>Delete done tasks</li>
+                <li ng-click="deleteAll()">Delete all tasks</li>
+                <li ng-click="deleteDone()">Delete done tasks</li>
             </ul>
         </li>
         <li>
             <h3>Filter</h3>
             <ul>
-                <li class="active">All tasks</li>
-                <li>Done tasks</li>
-                <li>Not done tasks</li>
+                <li class="{{showAll}}" ng-click="allActive()">All tasks</li>
+                <li class="{{showDone}}" ng-click="doneActive()">Done tasks</li>
+                <li class="{{showNotDone}}" ng-click="notDoneActive()">Not done tasks</li>
             </ul>
-        </li>-->
+        </li>
         <li>
             <h3>Saving all tasks on server</h3>
             <span class="save" ng-click="saveTasks()">Save</span>
@@ -48,7 +48,7 @@
     </ul>
 
     <ul class="task-list">
-        <li ng-repeat="task in todoList">
+        <li ng-show="task.visibility" ng-repeat="task in todoList">
             <button class="check {{task.check}}" ng-click="checkTask(task)"></button>
             <button class="delete" ng-click="deleteTask(task)"></button>
             <span ng-dblclick="editTask(task)">{{ task.task }}</span>
