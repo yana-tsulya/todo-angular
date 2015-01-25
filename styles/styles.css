@@ -117,7 +117,7 @@ body {
 	cursor: pointer;
 	line-height: 18px;
 }
-.content .control span.save {
+.content .control .save {
 	display: block;
 	padding: 5px 0;
 	background: #f5f5f5;
@@ -130,9 +130,6 @@ body {
 	overflow: hidden;
 	margin-top: 20px;
 }
-.content .task-list li:first-child {
-	margin-bottom: 5px;
-}
 .content .task-list li h2 {
 	overflow: hidden;
 	display: block;
@@ -143,21 +140,23 @@ body {
 	line-height: 30px;
 	text-align: center;
 }
-.content .task-list li a.delete {
+.content .task-list li .delete {
 	overflow: hidden;
 	display: block;
 	float: right;
-	height: 30px;
-	width: 30px;
+	height: 32px;
+	width: 32px;
+	padding: 0;
 	border-radius: 3px;
 	border: 1px solid #CECECE;
 	background: #F1F1F1 url("../images/delete30.png") no-repeat 3px;
 }
-.content .task-list li a.check {
+.content .task-list li .check {
 	display: block;
 	float: left;
-	height: 30px;
-	width: 30px;
+	height: 32px;
+	width: 32px;
+	padding: 0;
 	border-radius: 3px;
 	border: 1px solid #CECECE;
 	background: #F1F1F1 url("../images/empty40.png") no-repeat 3px 3px;
@@ -187,7 +186,7 @@ body {
 	text-indent: 10px;
 }
 
-.content .task-list li a.check.checked {
+.content .task-list li .check.checked {
 	background: #F1F1F1 url("../images/checked18.png") no-repeat 4px 3px;
 }
 /*----------------------------------------------------------------------------------*/
