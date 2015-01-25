@@ -15,11 +15,17 @@
                 });
                 $scope.doneTasks = count;
             }
-            function checkAllTest() {
-
-            }
 
             doneTaskCount();
+
+            function checkAllTest() {
+                if ($scope.todoList.length == $scope.doneTasks) {
+                    $scope.checkAllState = "UnCheck all tasks";
+                }
+                else {
+                    $scope.checkAllState = "Check all tasks";
+                }
+            }
 
             $http.get('http://localhost:1337/todo-angular'). // Houston, we have a problem
                 success(function(result) {
@@ -43,13 +49,15 @@
                     $scope.todoList[idx].check = "";
                 }
 
-                doneTaskCount()
+                doneTaskCount();
+                checkAllTest()
             };
             $scope.deleteTask = function(el) {
                 var idx = $scope.todoList.indexOf(el);
                 $scope.todoList.splice(idx, 1);
 
-                doneTaskCount()
+                doneTaskCount();
+                checkAllTest()
             };
             $scope.editTask = function(el) {
                 var idx = $scope.todoList.indexOf(el),
@@ -57,21 +65,27 @@
                 $scope.todoList.splice(idx, 1);
                 $scope.newTask = editedTaskText;
 
-                doneTaskCount()
+                doneTaskCount();
+                checkAllTest()
             };
 
             $scope.checkAll = function() {
-                if ($scope.checkAllState == "Check all tasks") {
-                    angular.forEach($scope.todoList, function(task) {
-                        if (!task.check) {task.check = "checked"}
-                    });
-                    $scope.checkAllState = "UnCheck all tasks";
+                if ($scope.todoList != 0) {
+                    if ($scope.checkAllState == "Check all tasks") {
+                        angular.forEach($scope.todoList, function(task) {
+                            if (!task.check) {task.check = "checked"}
+                        });
+                        $scope.checkAllState = "UnCheck all tasks";
+                    }
+                    else {
+                        angular.forEach($scope.todoList, function(task) {
+                            if (task.check) {task.check = ""}
+                        });
+                        $scope.checkAllState = "Check all tasks";
+                    }
                 }
                 else {
-                    angular.forEach($scope.todoList, function(task) {
-                        if (task.check) {task.check = ""}
-                    });
-                    $scope.checkAllState = "Check all tasks";
+                    alert('You should enter your tasks first!');
                 }
             };
 
