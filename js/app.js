@@ -25,7 +25,6 @@
             $scope.addTask = function() {
                 $scope.todoList.push({task: $scope.newTask, check: "", visibility: true});
                 $scope.newTask = "";
-
             };
 
             $scope.checkTask = function(el) {
@@ -64,12 +63,14 @@
                             if (!task.check) {task.check = "checked"}
                         });
                         $scope.checkAllState = "UnCheck all tasks";
+                        doneTaskCount();
                     }
                     else {
                         angular.forEach($scope.todoList, function(task) {
                             if (task.check) {task.check = ""}
                         });
                         $scope.checkAllState = "Check all tasks";
+                        doneTaskCount();
                     }
                 }
                 else {
@@ -80,6 +81,7 @@
             $scope.deleteAll = function() {
                 if ($scope.todoList.length != 0) {
                     $scope.todoList = [];
+                    doneTaskCount();
                 }
                 else {
                     alert('You should enter your tasks first!');
@@ -92,6 +94,7 @@
                         $scope.todoList.splice(idx, 1);
                     }
                 });
+                doneTaskCount();
             };
 
             $scope.allActive = function() {
