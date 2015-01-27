@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="todoMain">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="todoApp">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ToDo</title>
@@ -9,8 +9,8 @@
 </head>
 
 <body>
-<div class="content" ng-controller="MainController">
-    <form ng-submit="addTask()">
+<div class="content" ng-controller="mainController">
+    <form ng-submit="main.addTask()">
         <ul>
             <li class="submit-button"><input type="submit" name="submit" value="Add task"/></li>
             <li class="new-task"><input type="text" ng-model="newTask"/></li>
@@ -24,7 +24,7 @@
         </li>
         <li>
             <h3>Check all</h3>
-            <span ng-click="checkAll()">{{checkAllState}}</span>
+            <span ng-click="main.checkAll()">{{main.checkAllState}}</span>
         </li>
         <li>
             <h3>Delete</h3>
@@ -36,9 +36,14 @@
         <li>
             <h3>Filter</h3>
             <ul>
-                <li class="{{showAll}}" ng-click="allActive()">All tasks</li>
-                <li class="{{showDone}}" ng-click="doneActive()">Done tasks</li>
-                <li class="{{showNotDone}}" ng-click="notDoneActive()">Not done tasks</li>
+                <li ng-repeat="filter in filtersList"
+                    ng-class="{
+                        active: filter.state == true
+                    }"
+                    ng-click="filter.showFunction(filter, $index)"
+                        >
+                    {{filter.name}}
+                </li>
             </ul>
         </li>
         <li>
@@ -48,13 +53,20 @@
     </ul>
 
     <ul class="task-list">
-        <li ng-show="task.visibility" ng-repeat="task in todoList">
-            <button class="check {{task.check}}" ng-click="checkTask(task)"></button>
-            <button class="delete" ng-click="deleteTask(task)"></button>
-            <span ng-dblclick="editTask(task)">{{ task.task }}</span>
+        <li ng-show="task.visibility" ng-repeat="task in todoList()">
+            <button class="check"
+                    ng-class="{
+                        checked: task.check == true
+                    }"
+                    ng-click="checkTask(task, $index)"></button>
+            <button class="delete" ng-click="deleteTask(task, $index)"></button>
+            <span ng-dblclick="editTask(task, $index)">{{ task.task }}</span>
         </li>
     </ul>
 </div>
+<script type="text/javascript" src="js/model/apiModel.js"></script>
+<script type="text/javascript" src="js/model/todoModel.js"></script>
+<script type="text/javascript" src="js/controller/mainController.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
